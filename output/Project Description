@@ -1,0 +1,23 @@
+This project focuses on the design and simulation of a hardware-based stream cipher using Linear Feedback Shift Registers (LFSRs) implemented in Verilog (Verilog-2001 standard). The primary objective of the project is to demonstrate the generation of a pseudo-random keystream and its application in symmetric encryption and decryption.
+
+The system consists of three independent LFSRs with different register lengths: 5-bit, 7-bit, and 9-bit. Each LFSR uses a specific feedback tap polynomial to generate a pseudo-random output sequence. Upon reset, each register loads a non-zero seed value to ensure proper operation and avoid the all-zero lock-up state.
+
+The output bits of the three LFSRs are combined using XOR logic to produce a final keystream bit. This combined keystream enhances randomness compared to a single LFSR-based design. The generated keystream is then used in a stream cipher structure where encryption is performed by applying an XOR operation between the plaintext and the keystream:
+
+ciphertext = plaintext XOR keystream
+
+Due to the reversible nature of the XOR operation, decryption is performed using the same keystream:
+
+decrypted = ciphertext XOR keystream
+
+The modular architecture of the design includes:
+
+Separate LFSR modules
+
+A top-level cipher module
+
+A dedicated testbench for functional verification
+
+Simulation is performed using ModelSim. The testbench generates a clock signal, applies initial seed values, feeds an example 8-bit plaintext message, and verifies correct encryption and decryption. Functional correctness is confirmed when the decrypted output matches the original plaintext. Waveform analysis further validates proper shifting behavior of the LFSRs, accurate keystream generation, and correct XOR-based cipher operation.
+
+This project demonstrates key concepts in digital system design, including sequential logic implementation, pseudo-random sequence generation, modular hardware architecture, and simulation-based verification. It also provides a practical introduction to stream cipher design in hardware description languages.
