@@ -1,115 +1,29 @@
-🔐 Stream Cipher Design Using LFSR (Verilog)
-📌 Project Overview
+# LFSR-Based Stream Cipher in Verilog
 
-This project implements a simple stream cipher using multiple Linear Feedback Shift Registers (LFSRs) in Verilog.
-The design generates a keystream using three independent LFSRs and performs both encryption and decryption using XOR logic.
+## Overview
+This project implements a simple stream cipher using three Linear Feedback Shift Registers (5-bit, 7-bit, and 9-bit) in Verilog.
 
-The functionality is verified through simulation in ModelSim.
+The outputs of the LFSRs are XORed to generate a keystream:
 
-🧠 Design Architecture
+keystream = lfsr5 ^ lfsr7 ^ lfsr9
 
-The system consists of the following modules:
+Encryption and decryption are performed using XOR:
 
-1️⃣ LFSR Modules
+ciphertext = plaintext ^ keystream  
+decrypted  = ciphertext ^ keystream
 
-Three independent LFSRs with different lengths and tap polynomials:
+## Simulation
+The design is verified in ModelSim using a testbench that:
+- Generates a 10ns clock
+- Applies non-zero seeds
+- Encrypts and decrypts an 8-bit message
+- Confirms decrypted == plaintext
 
-5-bit LFSR
+## Files
+- lfsr.v  
+- cipher.v  
+- tb_cipher.v  
 
-7-bit LFSR
-
-9-bit LFSR
-
-Each LFSR:
-
-Loads a non-zero seed on reset
-
-Generates a pseudo-random output bit
-
-Uses XOR feedback based on its tap polynomial
-
-2️⃣ Keystream Generator
-
-The outputs of the three LFSRs are combined using XOR logic to produce the final keystream:
-
-keystream = lfsr5_out ^ lfsr7_out ^ lfsr9_out
-
-3️⃣ Encryption & Decryption
-
-Encryption:
-
-ciphertext = plaintext ^ keystream
-
-
-Decryption:
-
-decrypted = ciphertext ^ keystream
-
-
-Since XOR is reversible:
-
-plaintext = (plaintext ^ keystream) ^ keystream
-
-🧪 Testbench
-
-The testbench:
-
-Generates a clock (10ns period)
-
-Applies non-zero seeds
-
-Encrypts an 8-bit message
-
-Decrypts it
-
-Checks if decrypted output matches original plaintext
-
-Displays PASS/FAIL result
-
-Simulation results confirm correct functionality.
-
-📊 Simulation
-
-Simulation was performed using ModelSim.
-
-Waveforms verify:
-
-Proper LFSR shifting
-
-Correct keystream generation
-
-Successful encryption and decryption
-
-decrypted == plaintext
-
-(Screenshot of waveform included in repository)
-
-📂 Project Structure
-lfsr.v
-cipher.v
-tb_cipher.v
-README.md
-waveform.png
-
-🚀 Tools Used
-
-Verilog (Verilog-2001)
-
-ModelSim (Simulation)
-
-🎯 Key Concepts Demonstrated
-
-Linear Feedback Shift Registers (LFSR)
-
-Stream Cipher design
-
-XOR-based encryption
-
-Modular hardware design
-
-Digital simulation and waveform verification
-
-✅ Result
-
-The system successfully encrypts and decrypts data using a generated keystream.
-Simulation confirms correct and error-free operation.# LFSR-Based-Stream-Cipher-in-Verilog
+## Tools
+- Verilog (Verilog-2001)
+- ModelSim
